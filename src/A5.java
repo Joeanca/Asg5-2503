@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.io.FileReader;
 import java.util.*;
 
 public class A5 {
@@ -13,7 +14,8 @@ public class A5 {
 
 	private void run() {
 		try {
-			Scanner inp = new Scanner("inp3.txt");
+			FileReader file = new FileReader("inp3.txt");
+			Scanner inp = new Scanner(file);
 			String word = "";
 
 			while (inp.hasNext()) {
@@ -33,34 +35,33 @@ public class A5 {
 	}
 
 	private void deleteStopWords() {
-		for (Integer name: hashmap.keySet()){
-
-            String key =name.toString();
-            String value = hashmap.get(name).toString();  
-            System.out.println(key + " " + value);  
-            } 
+		for (Integer name : hashmap.keySet()) {
+			String key = name.toString();
+			String value = hashmap.get(name).toString();
+			System.out.println(key + " " + value);
+		}
 	}
 
 	private void add(String x) {
 		int key = hashCode(x);
 		Word word = new Word(x);
-		key = insert(key);
-		if (hashmap.containsKey(key))
-			hashmap.get(key).setCounter();
-		else
+		key = insert(key, x, 1);
+		if (key!=-1)
 			hashmap.put(key, word);
 
 	}
 
-	private int insert(int i) {
+	private int insert(int i, String x, int j) {
+
 		if (hashmap.get(i) == null)
 			return i;
+		else if (hashmap.get(i).getWord().equals(x)){
+			hashmap.get(i).setCounter();
+			return -1;
+		}		
 		else {
-			int j = 0;
-			while (hashmap.get(i) != null) {
-				j++;
-				i = i + (j ^ 2);
-			}
+			i = i + (j ^ 2);
+			insert(i, x, j++);
 		}
 		return i;
 	}
@@ -71,8 +72,6 @@ public class A5 {
 			key += x.charAt(i) + i;
 		if (hashmap.size() == 0)
 			return key;
-		while (key > hashmap.size() - 1)
-			key = key % hashmap.size();
 		return key;
 	}
 
