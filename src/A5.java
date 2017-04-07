@@ -195,7 +195,7 @@ public class A5 {
 		System.out.println("Statistics for Word Length");
 		System.out.println("The longest word is " + getMost(lengthTree));
 		System.out.println("The least frequent word is " + getLast(lengthTree));
-		System.out.println("The average word length is " + 6);
+		System.out.println("The average word length is " + averageLength);
 		System.out.println("\n------\n");
 		System.out.println("All Words");
 		// calls to print the words alphabetically
